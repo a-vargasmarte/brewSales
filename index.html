@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      font-family: sans-serif;
+    }
+    .selected {
+      fill: none;
+    }
+
+    .button {
+      min-width: 130px;
+      padding: 4px 5px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 13px;
+      border: 1px solid #e0e0e0;
+      text-decoration: none;
+    }
+
+    .button.active {
+      background: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<body>
+  <div id="toolbar">
+    <button id="all" class="button active">All</button>
+    <button id="saleType" class="button">By Type</button>
+
+    <div id="slider-div">
+      <label
+        >Date: <span id="dateLabel1">1/1/2019</span> -
+        <span id="dateLabel2">12/4/2019</span></label
+      >
+      <div id="date-slider"></div>
+    </div>
+  </div>
+  <!-- <button id="type" class="button">By Type</button>
+  <button id="Rating" class="button">By Rating</button>
+  <button id="Type" class="button">By Type</button> -->
+
+  <!-- <div id="graph" class="conceptmap"></div>
+  <div id="graph-info"></div>
+   -->
+
+  <script src="./app.js"></script>
+  <!-- External JS libraries -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/d3.min.js"></script>
+</body>
