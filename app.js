@@ -1,66 +1,70 @@
-var w = 1500,
-  h = 800;
+//////////////////////Bubble Chart////////////////////
+/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-var radius = 25;
-var color = d3.scaleOrdinal(d3.schemeCategory20);
-var centerScale = d3
-  .scalePoint()
-  .padding(1)
-  .range([0, w]);
-var forceStrength = 0.05;
+// var w = 1500,
+//   h = 800;
 
-var svg = d3
-  .select("body")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h);
+// var radius = 25;
+// var color = d3.scaleOrdinal(d3.schemeCategory20);
+// var centerScale = d3
+//   .scalePoint()
+//   .padding(1)
+//   .range([0, w]);
+// var forceStrength = 0.05;
 
-var simulation = d3
-  .forceSimulation()
-  .force(
-    "collide",
-    d3
-      .forceCollide(function(d) {
-        return d.r + 8;
-      })
-      .iterations(16)
-  )
-  .force("charge", d3.forceManyBody())
-  .force("y", d3.forceY().y(h / 2))
-  .force("x", d3.forceX().x(w / 2));
+// var svg = d3
+//   .select("body")
+//   .append("svg")
+//   .attr("width", w)
+//   .attr("height", h);
 
-// d3.json("data.json", data => {
-//   // console.log(data);
-//   let columnsObject = {
-//     columns: []
-//   };
-//   let repos = data.map((repo, i) => {
-//     // console.log(repo.language);
-//     let repoObject = {
-//       name: repo.name,
-//       size: repo.size,
-//       language: repo.language,
-//       url: repo.url
-//     };
-//     for (key in repoObject) {
-//       if (repoObject.hasOwnProperty(key) && i === 1) {
-//         columnsObject.columns.push(key);
-//       }
-//     }
+// var simulation = d3
+//   .forceSimulation()
+//   .force(
+//     "collide",
+//     d3
+//       .forceCollide(function(d) {
+//         return d.r + 8;
+//       })
+//       .iterations(16)
+//   )
+//   .force("charge", d3.forceManyBody())
+//   .force("y", d3.forceY().y(h / 2))
+//   .force("x", d3.forceX().x(w / 2));
 
-//     repoObject["r"] = 25 + (repo.size / 600);
-//     repoObject["x"] = w / 2;
-//     repoObject["y"] = h / 2;
+// var parseTime = d3.timeParse("%Y/%m/%d");
+// var formatTime = d3.timeFormat("%Y/%m/%d");
 
-//     return repoObject;
+// $("#date-slider").slider({
+//   range: true,
+//   max: parseTime("2019/4/31").getTime(),
+//   min: parseTime("2019/1/1").getTime(),
+//   step: 86400000, // One day
+//   values: [parseTime("2019/1/1").getTime(), parseTime("2019/12/31").getTime()],
+//   slide: function(event, ui) {
+//     $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
+//     $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
+//     update();
+//   }
+// });
+
+// d3.csv("./brewviz/brews.csv", function(data) {
+//   console.log(data);
+
+//   data = data.filter((d, i) => {
+//     return i < 50;
+//   });
+//   data.forEach(function(d) {
+//     d.r = d.totalSales / 30;
+//     d.x = w / 2;
+//     d.y = h / 2;
 //   });
 
-//   console.log(repos);
-//   console.log(columnsObject.columns);
+//   console.log(data);
 
-//   var circles = svg.selectAll("circle").data(repos, function(d) {
-
-//     return d.name;
+//   var circles = svg.selectAll("circle").data(data, function(d, i) {
+//     return i;
 //   });
 
 //   var circlesEnter = circles
@@ -76,13 +80,12 @@ var simulation = d3
 //       return 250;
 //     })
 //     .style("fill", function(d, i) {
-//       console.log(color(d.name));
-//       return color(d.name);
+//       return color(d.saleType);
 //     })
 //     .style("stroke", function(d, i) {
-//       return color(d.name);
+//       return color(d.saleType);
 //     })
-//     .style("stroke-width", 10)
+//     .style("stroke-width", 2)
 //     .style("pointer-events", "all")
 //     .call(
 //       d3
@@ -106,7 +109,7 @@ var simulation = d3
 //       });
 //   }
 
-//   simulation.nodes(repos).on("tick", ticked);
+//   simulation.nodes(data).on("tick", ticked);
 
 //   function dragstarted(d, i) {
 //     //console.log("dragstarted " + i)
@@ -131,7 +134,7 @@ var simulation = d3
 //     me.classed("selected", !me.classed("selected"));
 
 //     d3.selectAll("circle").style("fill", function(d, i) {
-//       return color(d.name);
+//       return color(d.saleType);
 //     });
 
 //     d3.selectAll("circle.selected").style("fill", "none");
@@ -229,208 +232,6 @@ var simulation = d3
 
 //   setupButtons();
 // });
-
-var parseTime = d3.timeParse("%Y/%m/%d");
-var formatTime = d3.timeFormat("%Y/%m/%d");
-
-$("#date-slider").slider({
-  range: true,
-  max: parseTime("2019/4/31").getTime(),
-  min: parseTime("2019/1/1").getTime(),
-  step: 86400000, // One day
-  values: [parseTime("2019/1/1").getTime(), parseTime("2019/12/31").getTime()],
-  slide: function(event, ui) {
-    $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
-    $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
-    update();
-  }
-});
-
-d3.csv("./brewviz/brews.csv", function(data) {
-  console.log(data);
-
-  data = data.filter((d, i) => {
-    return i < 50;
-  });
-  data.forEach(function(d) {
-    d.r = d.totalSales / 30;
-    d.x = w / 2;
-    d.y = h / 2;
-  });
-
-  console.log(data);
-
-  var circles = svg.selectAll("circle").data(data, function(d, i) {
-    return i;
-  });
-
-  var circlesEnter = circles
-    .enter()
-    .append("circle")
-    .attr("r", function(d, i) {
-      return d.r;
-    })
-    .attr("cx", function(d, i) {
-      return 175 + 25 * i + 2 * i ** 2;
-    })
-    .attr("cy", function(d, i) {
-      return 250;
-    })
-    .style("fill", function(d, i) {
-      return color(d.saleType);
-    })
-    .style("stroke", function(d, i) {
-      return color(d.saleType);
-    })
-    .style("stroke-width", 2)
-    .style("pointer-events", "all")
-    .call(
-      d3
-        .drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended)
-    );
-
-  circles = circles.merge(circlesEnter);
-
-  function ticked() {
-    //console.log("tick")
-    //console.log(data.map(function(d){ return d.x; }));
-    circles
-      .attr("cx", function(d) {
-        return d.x;
-      })
-      .attr("cy", function(d) {
-        return d.y;
-      });
-  }
-
-  simulation.nodes(data).on("tick", ticked);
-
-  function dragstarted(d, i) {
-    //console.log("dragstarted " + i)
-    if (!d3.event.active) simulation.alpha(1).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-
-  function dragged(d, i) {
-    //console.log("dragged " + i)
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-  }
-
-  function dragended(d, i) {
-    //console.log("dragended " + i)
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-    var me = d3.select(this);
-    console.log(me.classed("selected"));
-    me.classed("selected", !me.classed("selected"));
-
-    d3.selectAll("circle").style("fill", function(d, i) {
-      return color(d.saleType);
-    });
-
-    d3.selectAll("circle.selected").style("fill", "none");
-  }
-
-  function groupBubbles() {
-    hideTitles();
-
-    // @v4 Reset the 'x' force to draw the bubbles to the center.
-    simulation.force(
-      "x",
-      d3
-        .forceX()
-        .strength(forceStrength)
-        .x(w / 2)
-    );
-
-    // @v4 We can reset the alpha value and restart the simulation
-    simulation.alpha(1).restart();
-  }
-
-  function splitBubbles(byVar) {
-    centerScale.domain(
-      data.map(function(d) {
-        return d[byVar];
-      })
-    );
-
-    if (byVar == "all") {
-      hideTitles();
-    } else {
-      showTitles(byVar, centerScale);
-    }
-
-    // @v4 Reset the 'x' force to draw the bubbles to their year centers
-    simulation.force(
-      "x",
-      d3
-        .forceX()
-        .strength(forceStrength)
-        .x(function(d) {
-          return centerScale(d[byVar]);
-        })
-    );
-
-    // @v4 We can reset the alpha value and restart the simulation
-    simulation.alpha(2).restart();
-  }
-
-  function hideTitles() {
-    svg.selectAll(".title").remove();
-  }
-
-  function showTitles(byVar, scale) {
-    // Another way to do this would be to create
-    // the year texts once and then just hide them.
-    var titles = svg.selectAll(".title").data(scale.domain());
-
-    titles
-      .enter()
-      .append("text")
-      .attr("class", "title")
-      .merge(titles)
-      .attr("x", function(d) {
-        return scale(d);
-      })
-      .attr("y", 40)
-      .attr("text-anchor", "middle")
-      .text(function(d) {
-        return d;
-      });
-
-    titles.exit().remove();
-  }
-
-  function setupButtons() {
-    d3.selectAll(".button").on("click", function() {
-      // Remove active class from all buttons
-      d3.selectAll(".button").classed("active", false);
-      // Find the button just clicked
-      var button = d3.select(this);
-
-      // Set it as the active button
-      button.classed("active", true);
-
-      // Get the id of the button
-      var buttonId = button.attr("id");
-
-      console.log(buttonId);
-      // Toggle the bubble chart based on
-      // the currently clicked button.
-      splitBubbles(buttonId);
-    });
-  }
-
-  setupButtons();
-});
-
-// axios.get('')
 
 ///////////////////////////Concept Map/////////////////////
 
@@ -1090,3 +891,217 @@ d3.csv("./brewviz/brews.csv", function(data) {
 
 //   };
 // })();
+
+////////////////////SCATTERPLOT///////////////////////
+/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+var margin = { top: 20, right: 50, bottom: 50, left: 85 },
+  svg_dx = 600,
+  svg_dy = 400,
+  plot_dx = svg_dx - margin.right - margin.left,
+  plot_dy = svg_dy - margin.top - margin.bottom;
+
+var x = d3.scaleTime().range([margin.right, plot_dx]),
+  y = d3.scaleLinear().range([plot_dy, margin.top]);
+
+var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+var parseTime = d3.timeParse("%Y/%m/%d");
+var formatTime = d3.timeFormat("%Y/%m/%d");
+
+var formatIncome = d3.format("$,");
+
+var svg = d3
+  .select("#chart")
+  .append("svg")
+  .attr("width", svg_dx)
+  .attr("height", svg_dy);
+
+d3.csv("./regulars.csv", function(d) {
+  console.log(d);
+
+  var n = d.length;
+
+  // Prepare and clean data
+
+  let testNames = 0;
+
+  let cleanData = d.map((beer, i, j) => {
+    let filteredData = {};
+    let date = parseTime(beer.date.replace(/-/g, "/"));
+    let purchase = Number(beer.purchase);
+    let purchaseCount = Number(beer.purchaseCount);
+    filteredData["name"] = beer.name;
+    filteredData["purchase"] = purchase;
+    filteredData["date"] = date;
+    filteredData["beerType"] = beer.saleType;
+    filteredData["purchaseCount"] = purchaseCount;
+    filteredData["r"] = d.purchase;
+
+    // let names = ["Bob", "Melissa", "Sam", "Peter", "Ramona"];
+
+    // function getRandomArbitrary(min, max) {
+    //   return Math.random() * (max - min) + min;
+    // }
+
+    // let price = getRandomArbitrary(5, 13);
+
+    // let name = names[Math.floor(Math.random() * names.length)];
+
+    return filteredData;
+  });
+
+  let testDate = parseTime("2019/02/02");
+  cleanData = cleanData.filter(d => {
+    return Number(d.date) < Number(testDate);
+  });
+
+  console.log(cleanData);
+
+  var d_extent_x = d3.extent(cleanData, d => d.date),
+    d_extent_y = d3.extent(cleanData, d => +d.purchase);
+
+  x.domain(d_extent_x);
+  y.domain(d_extent_y);
+
+  var axis_x = d3.axisBottom(x).ticks(6),
+    axis_y = d3.axisLeft(y).tickFormat(formatIncome);
+
+  svg
+    .append("g")
+    .attr("id", "axis_x")
+    .attr("transform", "translate(0," + (plot_dy + margin.bottom / 2) + ")")
+    .call(axis_x);
+
+  svg
+    .append("g")
+    .attr("id", "axis_y")
+    .attr("transform", "translate(" + margin.left / 2 + ", 0)")
+    .call(axis_y);
+
+  d3.select("#axis_x")
+    .append("text")
+    .attr("transform", "translate(360, -10)")
+    .text("Date");
+
+  d3.select("#axis_y")
+    .append("text")
+    .attr("transform", "rotate(-90) translate(-20, 15)")
+    .text("Total Sales");
+
+  var circles = svg
+    .append("g")
+    .selectAll("circle")
+    .data(cleanData)
+    .enter()
+    .append("circle")
+    .attr("r", (d, i) => Number(d.purchase / 2.5))
+    .attr("cx", (d, i) => x(Number(d.date)))
+    .attr("cy", d => y(Number(d.purchase)))
+    .attr("class", "non_brushed")
+    .style("fill", d => color(d.name))
+    .attr("stroke", (d, i) => {
+      // if (d.purchaseCount >= 25) {
+      //   return "green";
+      // } else if (d.purchaseCount >= 50) {
+      //   return "purple";
+      // } else if (d.purchaseCount >= 100) {
+      //   return "red";
+      // } else {
+      //   return "black";
+      // }
+      return "black";
+    })
+    .attr("stroke-width", 1);
+
+  function highlightBrushedCircles() {
+    if (d3.event.selection != null) {
+      // revert circles to initial style
+      circles.attr("class", "non_brushed");
+
+      var brush_coords = d3.brushSelection(this);
+
+      // style brushed circles
+      circles
+        .filter(function() {
+          var cx = d3.select(this).attr("cx"),
+            cy = d3.select(this).attr("cy");
+
+          return isBrushed(brush_coords, cx, cy);
+        })
+        .attr("class", "brushed");
+    }
+  }
+  function displayTable() {
+    // disregard brushes w/o selections
+    // ref: http://bl.ocks.org/mbostock/6232537
+    if (!d3.event.selection) return;
+
+    // programmed clearing of brush after mouse-up
+    // ref: https://github.com/d3/d3-brush/issues/10
+    d3.select(this).call(brush.move, null);
+
+    var d_brushed = d3.selectAll(".brushed").data();
+
+    // populate table if one or more elements is brushed
+    if (d_brushed.length > 0) {
+      clearTableRows();
+      d_brushed.forEach(d_row => populateTableRow(d_row));
+    } else {
+      clearTableRows();
+    }
+  }
+
+  var brush = d3
+    .brush()
+    .on("brush", highlightBrushedCircles)
+    .on("end", displayTable);
+
+  svg.append("g").call(brush);
+});
+
+function clearTableRows() {
+  hideTableColNames();
+  d3.selectAll(".row_data").remove();
+}
+
+function isBrushed(brush_coords, cx, cy) {
+  var x0 = brush_coords[0][0],
+    x1 = brush_coords[1][0],
+    y0 = brush_coords[0][1],
+    y1 = brush_coords[1][1];
+
+  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+}
+
+function hideTableColNames() {
+  d3.select("table").style("visibility", "hidden");
+}
+
+function showTableColNames() {
+  d3.select("table").style("visibility", "visible");
+}
+
+function populateTableRow(d_row) {
+  showTableColNames();
+
+  // console.log(d_row);
+
+  var d_row_filter = [
+    d_row.name,
+    d_row.date,
+    formatIncome(d_row.purchase),
+    d_row.beerType
+  ];
+
+  d3.select("table")
+    .append("tr")
+    .attr("class", "row_data")
+    .selectAll("td")
+    .data(d_row_filter)
+    .enter()
+    .append("td")
+    .attr("align", (d, i) => (i == 0 ? "left" : "right"))
+    .text(d => d);
+}

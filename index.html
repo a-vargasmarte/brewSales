@@ -5,39 +5,40 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+    text {
       font-family: sans-serif;
-    }
-    .selected {
-      fill: none;
+      fill: #000000;
     }
 
-    .button {
-      min-width: 130px;
-      padding: 4px 5px;
-      cursor: pointer;
-      text-align: center;
-      font-size: 13px;
-      border: 1px solid #e0e0e0;
-      text-decoration: none;
+    table {
+      visibility: hidden;
+      position: absolute;
+      top: 30px;
+      left: 500px;
+      font-family: sans-serif;
+      font-size: 0.7em;
     }
 
-    .button.active {
-      background: #000;
-      color: #fff;
+    tr:nth-child(even) {
+      background-color: #d9d9d9;
+    }
+
+    .brushed {
+      fill: #ff3399;
+      stroke: #8e1b54;
+      opacity: 1;
+    }
+
+    .non_brushed {
+      fill: #404040;
+      opacity: 0.5;
     }
   </style>
 </head>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <body>
-  <div id="toolbar">
+  <!-- <div id="toolbar">
     <button id="all" class="button active">All</button>
     <button id="saleType" class="button">By Type</button>
 
@@ -48,7 +49,7 @@
       >
       <div id="date-slider"></div>
     </div>
-  </div>
+  </div> -->
   <!-- <button id="type" class="button">By Type</button>
   <button id="Rating" class="button">By Rating</button>
   <button id="Type" class="button">By Type</button> -->
@@ -57,10 +58,26 @@
   <div id="graph-info"></div>
    -->
 
+  <!--viz-->
+  <div id="chart"></div>
+
+  <!--table for data of brushed elements-->
+  <div id="table">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Charge</th>
+        <th>Sale Type</th>
+        <!-- <th>Charge</th> -->
+      </tr>
+    </table>
+  </div>
+
   <script src="./app.js"></script>
   <!-- External JS libraries -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/d3.min.js"></script>
+  <script src="./brewviz/js/jquery.min.js"></script>
+  <script src="./brewviz/js/bootstrap.min.js"></script>
+  <script src="./brewviz/js/jquery-ui.min.js"></script>
+  <script src="./brewviz/js/d3.min.js"></script>
 </body>
